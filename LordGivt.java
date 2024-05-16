@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.Toolkit;
 
 public class LordGivt {
     private Robot robot;
@@ -140,8 +141,16 @@ public class LordGivt {
     }
 
     private boolean isKeyPressed(int keyCode) {
-        return robot.keyPress(keyCode);
+        robot.keyPress(keyCode);
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        robot.keyRelease(keyCode);
+        return Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent(KeyEvent.KEY_RELEASED) == null;
     }
+
 
     public static void main(String[] args) {
         new LordGivt();
